@@ -1,0 +1,36 @@
+.drag-and-drop-container {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .draggable-elements {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .draggable {
+    padding: 10px;
+    background-color: #ccc;
+    border: 1px solid #999;
+    cursor: grab;
+  }
+  
+  .drop-container {
+    width: 200px;
+    height: 300px;
+    border: 2px dashed #999;
+    position: relative;
+  }
+  
+  .drop-container.drag-over {
+    background-color: #e0e0e0;
+  }
+  
+  .dropped-item {
+    position: absolute;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+  }
+  

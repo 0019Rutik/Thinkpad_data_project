@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Recognition App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Face Recognition App</h1>
+        <input type="file" id="upload" accept="image/*">
+        <button id="recognize-btn">Recognize</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        document.getElementById('recognize-btn').onclick = function () {
+            const input = document.getElementById('upload');
+            const file = input.files[0];
+            const reader = new FileReader();
+
+            reader.onloadend = function () {
+                const base64String = reader.result.replace('data:', '').replace(/^.+,/, '');
+                fetch('/recognize', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ image: base64String })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.innerHTML = '<h2>Results:</h2>';
+                    data.forEach(name => {
+                        const p = document.createElement('p');
+                        p.textContent = name;
+                        resultsDiv.appendChild(p);
+                    });
+                });
+            };
+            
+            reader.readAsDataURL(file);
+        };
+    </script>
+</body>
+</html>
